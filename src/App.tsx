@@ -1,5 +1,5 @@
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import { IonApp, IonIcon, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 
@@ -22,19 +22,66 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+import { home, search, list, cart, map, calendar, personCircle, informationCircle} from 'ionicons/icons';
+import Search from './pages/Search';
+import Category from './pages/Category';
+import Cart from './pages/Cart';
+import ProductDesc from './pages/ProductDesc';
+import SuccessPage from './pages/SuccessPage';
+import ProductByCategory from './pages/ProductByCategory';
+import HomeSeller from './pages/HomeSeller';
+import ReviewPage from './pages/ReviewPage';
+import Review from './components/Review';
+import ProductSeller from './pages/ProductSeller';
+import HalLogin from './pages/HalLogin';
+import LoginCustomer from './pages/LoginCustomer';
+import LoginSeller from './pages/LoginSeller';
+import RegisterCustomer from './pages/RegisterCustomer';
+import RegisterSeller from './pages/RegisterSeller';
+import EditProduk from './pages/EditProduk';
+import TambahProduk from './pages/TambahProduk';
+
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-      </IonRouterOutlet>
+      <IonTabs className='tab'>
+          <IonRouterOutlet>
+            <Route exact path="/home" component={Home} />
+            <Route path="/search" component={Search} />
+            <Route path="/category" component={Category} />
+            <Route path="/cart" component={Cart} />
+            <Route path="/product" component={ProductDesc} />
+            <Route path="/successpage" component={SuccessPage} />
+            <Route path="/productbycategory" component={ProductByCategory} />
+            <Route path="/review" component={ReviewPage} />
+            <Route path="/halamanlogin" component={HalLogin} />
+            <Route path="/logincustomer" component={LoginCustomer} />
+            <Route path="/loginseller" component={LoginSeller} />
+            <Route path="/registercustomer" component={RegisterCustomer} />
+            <Route path="/registerseller" component={RegisterSeller} />
+            <Route path="/editproduk" component={EditProduk} />
+            <Route path="/tambahproduk" component={TambahProduk} />
+            <Redirect exact from='/' to="/home" />
+          </IonRouterOutlet>
+          <IonTabBar slot='bottom'>
+            <IonTabButton tab='home' href='/home'>
+              <IonIcon icon={home} />
+            </IonTabButton>
+            <IonTabButton tab='search' href='/search'>
+              <IonIcon icon={search} />
+            </IonTabButton>
+            <IonTabButton tab='category' href='/category'>
+              <IonIcon icon={list} />
+            </IonTabButton>
+            <IonTabButton tab='cart' href='/cart'>
+              <IonIcon icon={cart} />
+            </IonTabButton>
+          </IonTabBar>
+      </IonTabs>
+      <Route path="/homeseller" component={HomeSeller} />
+      <Route path="/productseller" component={ProductSeller} />
     </IonReactRouter>
   </IonApp>
 );

@@ -1,15 +1,10 @@
-.toolbarHome {
-    background-color: #F1F1F1;
-    margin-bottom: 5px;
+.toolbar {
+    --background: #F1F1F1;
 }
 
 .title {
     font-weight: bold;
     font-size: 23px;
-}
-
-.avatar {
-    margin-right: 5px;
 }
 
 .logo {
@@ -18,8 +13,3 @@
     margin-left: 5px;
     margin-right: -5px;
 }
-
-.homeContent {
-    margin-top: 10px;
-}
-
