@@ -1,6 +1,8 @@
 import { IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonImg, IonButton, IonTitle, IonLabel } from "@ionic/react"
-import React from "react";
+import React, { useContext } from "react";
 import "./Kategori.css";
+import StoreContext from './data/store-context';
+import { useHistory } from "react-router";
 
 export const KATEGORI_LIST = [
     {photo: 'https://padiumkm.id/public/products/47619/599812/img_20220329_11.1648526512.jpg', desc: 'Tas'},
@@ -12,16 +14,22 @@ export const KATEGORI_LIST = [
   ];
 
 const Kategori: React.FC = () => {
+    const storeCtx = useContext(StoreContext);
+    const history = useHistory();
+    const selectCategoryHandler = async(category: string) => {
+        storeCtx.selectCategory(category);
+        await history.push(`/productbycategory`);
+    }
     return(
         <IonGrid>
             <IonRow>
                 {KATEGORI_LIST.map(data => (
-                <IonCol size="6">
+                <IonCol size="6" key={data.desc}>
                     <IonCard className="categoryCard">
                         <IonCardContent>
                             <IonImg src={data.photo} className="categoryImage"></IonImg>
                             <IonTitle className="categoryDescription">{data.desc}</IonTitle>
-                                <IonButton fill='clear' className='categoryMore' href="/productbycategory">Selengkapnya</IonButton>
+                                <IonButton onClick={selectCategoryHandler.bind(null, data.desc)} fill='clear' className='categoryMore'>Selengkapnya</IonButton>
                         </IonCardContent>
                     </IonCard>
                 </IonCol>

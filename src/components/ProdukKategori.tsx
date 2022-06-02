@@ -1,7 +1,9 @@
-import { IonButton, IonCard, IonCardContent, IonCol, IonGrid, IonIcon, IonImg, IonItem, IonLabel, IonRow, IonText } from "@ionic/react";
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonGrid, IonIcon, IonImg, IonItem, IonLabel, IonRow, IonText } from "@ionic/react";
 import { cart } from "ionicons/icons";
-import React from "react";
+import React, { useContext } from "react";
 import './ProdukKategori.css';
+import StoreContext from './data/store-context';
+import { useHistory } from "react-router";
 
 export const PRODUCT_BY_CATEGORY = [
     {photo: 'https://cf.shopee.co.id/file/b6500b0004c52158b187d5cdeef8a731', name: 'Tas 1', desc: 'Deskripsi 1', stock : 10, price: "120.000"},
@@ -13,10 +15,24 @@ export const PRODUCT_BY_CATEGORY = [
   ];
 
 const ProdukKategori: React.FC = () => {
+    const storeCtx = useContext(StoreContext);
+
+    const addCartHandler = (id: string) => {
+        storeCtx.addCart(id);
+      }
+
+      const history = useHistory();
+
+        const selectProductHandler = async(id: string) => {
+            storeCtx.selectProduct(id);
+            await history.push(`/product`);
+        }
+
+      console.log(storeCtx);
     return (
         <IonGrid>
-            {PRODUCT_BY_CATEGORY.map(data => (
-            <IonCard className="pbcCard" href="/product">
+            {storeCtx.categories.map(data => (
+            <IonCard className="pbcCard" onClick={selectProductHandler.bind(null,data.id)}>
                         <IonRow>
                         <IonCol size="6">
                         <IonCardContent>
@@ -29,7 +45,7 @@ const ProdukKategori: React.FC = () => {
                             <IonText color="dark" className="itemName">
                             {data.name}
                             </IonText>
-                            <p className="itemDesc">{data.desc} </p>  
+                            <p className="itemDesc">{data.name} </p>  
                             <p className="itemStock">Stock : {data.stock}</p>
                             <IonText color="dark" className="hargaProduk">
                             Rp {data.price}
@@ -37,7 +53,9 @@ const ProdukKategori: React.FC = () => {
                             </IonLabel>
                             <IonItem  lines="none" className="pbcItem">            
                             <IonButton color="dark" href="/review" className="btnBeli">Beli</IonButton>
-                            <IonIcon size="large" icon={cart} />      
+                            <IonButtons onClick={addCartHandler.bind(null,"2")}>
+                                <IonIcon size="large" icon={cart} />     
+                            </IonButtons>       
                             </IonItem> 
                             </div>                     
                         </IonCol>

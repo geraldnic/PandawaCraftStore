@@ -40,12 +40,14 @@ import RegisterCustomer from './pages/RegisterCustomer';
 import RegisterSeller from './pages/RegisterSeller';
 import EditProduk from './pages/EditProduk';
 import TambahProduk from './pages/TambahProduk';
+import StoreContextProvider from './components/data/StoreContextProvider';
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
+    <StoreContextProvider>
       <IonTabs className='tab'>
           <IonRouterOutlet>
             <Route exact path="/home" component={Home} />
@@ -56,13 +58,6 @@ const App: React.FC = () => (
             <Route path="/successpage" component={SuccessPage} />
             <Route path="/productbycategory" component={ProductByCategory} />
             <Route path="/review" component={ReviewPage} />
-            <Route path="/halamanlogin" component={HalLogin} />
-            <Route path="/logincustomer" component={LoginCustomer} />
-            <Route path="/loginseller" component={LoginSeller} />
-            <Route path="/registercustomer" component={RegisterCustomer} />
-            <Route path="/registerseller" component={RegisterSeller} />
-            <Route path="/editproduk" component={EditProduk} />
-            <Route path="/tambahproduk" component={TambahProduk} />
             <Redirect exact from='/' to="/home" />
           </IonRouterOutlet>
           <IonTabBar slot='bottom'>
@@ -82,6 +77,14 @@ const App: React.FC = () => (
       </IonTabs>
       <Route path="/homeseller" component={HomeSeller} />
       <Route path="/productseller" component={ProductSeller} />
+      <Route path="/editproduk" component={EditProduk} />
+      <Route path="/tambahproduk" component={TambahProduk} />
+      <Route path="/halamanlogin" component={HalLogin} />
+      <Route path="/logincustomer" component={LoginCustomer} />
+      <Route path="/loginseller" component={LoginSeller} />
+      <Route path="/registercustomer" component={RegisterCustomer} />
+      <Route path="/registerseller" component={RegisterSeller} />
+      </StoreContextProvider>
     </IonReactRouter>
   </IonApp>
 );

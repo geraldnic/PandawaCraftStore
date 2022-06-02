@@ -1,13 +1,19 @@
 import {IonText, IonItem, IonIcon, IonRow, IonLabel, IonCol, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonImg, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, IonAvatar } from "@ionic/react";
-import React from "react";
+import React, { useContext } from "react";
 import { star,home, search, list, cart, map, calendar, personCircle, informationCircle} from 'ionicons/icons';
 import "./ProductDeskripsi.css";
+import StoreContext from './data/store-context';
 
 export const LIST_GAMBAR = [
     {photo: 'https://padiumkm.id/public/products/47619/599812/img_20220329_11.1648526512.jpg', desc: 'Tas'},
   ];
 
 const ProductDesc: React.FC = () => {
+    const storeCtx = useContext(StoreContext);
+
+    const addCartHandler = (id: string) => {
+        storeCtx.addCart(id);
+      }
     return (
         <IonPage>
             <IonHeader>
@@ -24,7 +30,7 @@ const ProductDesc: React.FC = () => {
             </IonToolbar>
             </IonHeader>
       <IonContent>
-      {LIST_GAMBAR.map(data => (
+      {storeCtx.descriptions.map(data => (
           <IonRow>
                 <IonCol size="12">
                     <IonCard className="productDescCard">
@@ -38,17 +44,18 @@ const ProductDesc: React.FC = () => {
                             <div className="midV">
                             <IonLabel>
                             <IonText color="dark" className="itemName">
-                            {data.desc}
-                            </IonText>
-                            <p className="itemDesc">Tas Anyaman Sedotan </p>  
-                            <p className="itemStock">Stock : 14</p>
+                            {data.name}
+                            </IonText> 
+                            <p className="itemStock">Stock : {data.stock}</p>
                             <IonText color="dark">
-                            <IonText className="hargaProduk">Rp 215.000 </IonText> 
+                            <IonText className="hargaProduk">Rp {data.price} </IonText> 
                             </IonText> 
                             </IonLabel>
                             <IonItem  lines="none" className="pbcItem">            
                             <IonButton color="dark" href="/review" className="btnBeli">Beli</IonButton>
-                            <IonIcon size="large" icon={cart} />      
+                            <IonButtons onClick={addCartHandler.bind(null,data.id)}>
+                                <IonIcon size="large" icon={cart} />     
+                            </IonButtons> 
                             </IonItem> 
                             </div>                     
                         </IonCol>
@@ -60,20 +67,7 @@ const ProductDesc: React.FC = () => {
                                     <IonText className="deskripsiProduk">Deskripsi</IonText>
                                     <IonText color="dark">
                                     <h5 className="detailProduk">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam lorem, eleifend et volutpat in, rhoncus sit amet massa. 
-                                    Proin posuere magna nisl, in consequat leo imperdiet et. In hac habitasse platea dictumst. Fusce odio risus,
-                                    blandit ut finibus et, bibendum ut dolor. Etiam sed auctor nisl, sed ullamcorper leo. Curabitur et eros sed sapien 
-                                    egestas semper lacinia nec enim. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                                    Nunc finibus feugiat dignissim. Phasellus ante libero, posuere eu lectus vitae, facilisis auctor felis. Nullam condimentum velit.
-                                    </h5>
-                                    </IonText>
-
-                                    <IonText className="MnC">Material & care</IonText>
-                                    <IonText color="dark">
-                                    <h5 className="detailProduk">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam lorem, eleifend et volutpat in, rhoncus sit amet massa. 
-                                    Proin posuere magna nisl, in consequat leo imperdiet et. In hac habitasse platea dictumst. Fusce odio risus,
-                                    blandit ut finibus et, bibendum ut dolor. Etiam sed auctor nisl, sed ullamcorper leo. Curabitur et eros sed sapien. 
+                                    {data.description}
                                     </h5>
                                     </IonText>
                                 </IonLabel>

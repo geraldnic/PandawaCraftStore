@@ -1,14 +1,17 @@
-import React, {useRef, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import { IonText, IonCol, IonRow, IonInput, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton, IonImg, IonButtons, IonAvatar, IonGrid } from '@ionic/react';
 import { pin, wifi, wine, warning, walk } from 'ionicons/icons';
 import './ShoppingCart.css';
 import logo from "../assets/logo.png";
+import StoreContext from './data/store-context';
 
 export const LIST_CART = [
   {photo: 'https://padiumkm.id/public/products/47619/599812/img_20220329_11.1648526512.jpg', desc: 'Tas'}
 ];
 
 const ShoppingCart: React.FC = () => {
+
+  const storeCtx = useContext(StoreContext);
 
   const [count, setCount] = useState(() => {
     return 1
@@ -42,7 +45,7 @@ const ShoppingCart: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonContent>
-        {LIST_CART.map(data => (
+        {storeCtx.carts.map(data => (
                     <IonItem>
                       <IonGrid>
                         <IonRow>
@@ -55,12 +58,11 @@ const ShoppingCart: React.FC = () => {
                             <div className="midV">
                             <IonLabel>
                             <IonText color="dark" className="itemName">
-                            {data.desc}
+                            {data.name}
                             </IonText>
-                            <p className="itemDesc">Tas Anyaman Rotan </p>  
-                            <p className="itemStock">Stock : 14</p>
+                            <p className="itemStock">Stok : {data.stock}</p>
                             <IonText color="dark">
-                            <IonText className="hargaProduk">Rp 215.000 </IonText> 
+                            <IonText className="hargaProduk">Rp {data.price} </IonText> 
                             </IonText> 
                             </IonLabel>
                             </div>                     
